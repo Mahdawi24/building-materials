@@ -26,4 +26,20 @@ router.get('/new', isSignedIn, async (req, res) => {
 });
 
 
+router.post('/', isSignedIn, async (req, res) => {
+  try {
+    await Material.create({
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      unit: req.body.unit,
+      createdBy: req.session.user._id
+    })
+    res.redirect('/materials')
+  } catch (err) {
+    console.error(err)
+    res.redirect('/materials/new')
+  }
+});
+
 module.exports = router
