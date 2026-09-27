@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Material</title>
+</head>
+<body>
+  <%- include('../partials/navbar.ejs') %>
+  <h1>Add New Material</h1>
+
+  <form action="/materials" method="POST">
+    <div>
+      <label for="name">Material Name:</label>
+      <input type="text" name="name" id="name" required>
+    </div>
+
+    <div>
+      <label for="category">Category:</label>
+      <select name="category" id="category" required>
+        <% for (let i = 0; i < categories.length; i++) { %>
+          <option value="<%= categories[i]._id %>"><%= categories[i].name %></option>
+        <% } %>
+      </select>
+    </div>
+
+    <div>
+      <label for="price">Price:</label>
+      <input type="number" name="price" id="price" min="0" required>
+    </div>
+
+    <div>
+      <label for="unit">Unit (KG, QTY, Meter):</label>
+      <input type="text" name="unit" id="unit" required>
+    </div>
+
+    <button type="submit">Add Material</button>
+  </form>
+
+  <br>
+  <a href="/materials">Cancel</a>
+</body>
+</html>
