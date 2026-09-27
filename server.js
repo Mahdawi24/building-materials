@@ -43,19 +43,10 @@ app.use(passUserToView)
 
 
 
-
-
-
-
-
-
-
 // Routes go here
-app.use('/auth',authController)
-app.use('/',indexController)
-
-
-
+app.use('/auth', authController);
+app.use('/materials', materialsController);
+app.use('/', indexController);
 
 
 // connect to database and listen on Port 3000
