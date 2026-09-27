@@ -58,16 +58,42 @@ router.get('/:id/edit', isSignedIn, async (req, res) => {
   try {
     const material = await Material.findById(req.params.id)
 
-    // Verify creator authorization
     if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
       return res.redirect(`/materials/${req.params.id}`)
     }
 
-    const categories = await Category.find();
+    const categories = await Category.find()
     res.render('materials/edit.ejs', { material, categories })
   } catch (err) {
     console.error(err)
     res.redirect('/materials')
+  }
+});
+
+
+router.put('/:id', isSignedIn, async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id)
+
+
+    if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
+      return res.redirect(`/materials/${req.params.id}`)
+    }
+
+    await Material.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        category: req.body.category,
+        price: req.body.price,
+        unit: req.body.unit
+      }
+    );
+
+    res.redirect(`/materials/${req.params.id}`)
+  } catch (err) {
+    console.error(err)
+    res.redirect(`/materials/${req.params.id}/edit`)
   }
 });
 
