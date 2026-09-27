@@ -54,4 +54,21 @@ router.get('/:id', async (req, res) => {
 });
 
 
+router.get('/:id/edit', isSignedIn, async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id)
+
+    // Verify creator authorization
+    if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
+      return res.redirect(`/materials/${req.params.id}`)
+    }
+
+    const categories = await Category.find();
+    res.render('materials/edit.ejs', { material, categories })
+  } catch (err) {
+    console.error(err)
+    res.redirect('/materials')
+  }
+});
+
 module.exports = router
