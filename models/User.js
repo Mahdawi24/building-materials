@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-module.exports = router;
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -12,20 +11,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone:{
+  phone: {
     type: Number,
     required: true
   },  
-  assignedSalesman:{
+  assignedSalesman: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    ref: 'Salesman'
   },
-  savedMaterials:{
+  savedMaterials: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "material"
-  }
-}, {timestamps: true});
+    ref: 'Material'
+  }]
+}, { timestamps: true });
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materials Index</title>
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+  <h1>Building Materials List</h1>
+
+  <% if (materials.length === 0) { %>
+    <p>No materials available yet.</p>
+  <% } else { %>
+    <ul>
+      <% for (let i = 0; i < materials.length; i++) { %>
+        <li>
+          <a href="/materials/<%= materials[i]._id %>"><%= materials[i].name %></a>
+          - Price: $<%= materials[i].price %> / <%= materials[i].unit %>
+        </li>
+      <% } %>
+    </ul>
+  <% } %>
+</body>
+</html>
