@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Material</title>
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+  <h1>Edit Material</h1>
+
+  <form action="/materials/<%= material._id %>?_method=PUT" method="POST">
+    <div>
+      <label for="name">Material Name:</label>
+      <input type="text" name="name" id="name" required>
+    </div>
+
+    <div>
+      <label for="category">Category:</label>
+      <select name="category" id="category" required>
+        <% for (let i = 0; i < categories.length; i++) { %>
+          <option <%= material.category && material.category.toString() === categories[i]._id.toString() %>>
+            <%= categories[i].name %>
+          </option>
+        <% } %>
+      </select>
+    </div>
+
+    <div>
+      <label for="price">Price:</label>
+      <input type="number" name="price" id="price" min="0" required>
+    </div>
+
+    <div>
+      <label for="unit">Unit:</label>
+      <input type="text" name="unit" id="unit" required>
+    </div>
+
+    <button type="submit">Update Material</button>
+  </form>
+
+  <br>
+  <a href="/materials/<%= material._id %>">Cancel</a>
+</body>
+</html>
