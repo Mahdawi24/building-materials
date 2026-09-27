@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Building Materials Home Page</title>
 </head>
 <body>
-    <%- include('./partials/navbar') %>
+<%- include('./partials/navbar.ejs') %>
 
-    <h1>Welcome to my Website</h1>
-    
+  <h1>Welcome to the Building Materials Management App</h1>
+  <p>Manage, browse, and organize building materials efficiently.</p>
+
+  <% if (user) { %>
+    <p>Logged in as: <%= user.username %></p>
+    <a href="/materials">View All Materials</a>
+    <br><br>
+    <a href="/materials/new">Add a New Material</a>
+  <% } else { %>
+    <p>Please sign in or sign up to manage materials.</p>
+    <a href="/auth/sign-in">Sign In</a> | 
+    <a href="/auth/sign-up">Sign Up</a>
+  <% } %>
 </body>
 </html>
