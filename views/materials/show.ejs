@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Details</title>
+</head>
+<body>
+    <%- include('../partials/navbar.ejs') %>
+
+  <h1><%= material.name %></h1>
+  <p>Category: <%= material.category.name %></p>
+  <p>Price: $<%= material.price %></p>
+  <p>Unit: <%= material.unit %></p>
+  <p>Created By: <%= material.createdBy.name %></p>
+
+  <% if (user && material.createdBy && material.createdBy._id.toString() === user._id.toString()) { %>
+    <a href="/materials/<%= material._id %>/edit">Edit Material</a>
+
+    <form action="/materials/<%= material._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete Material</button>
+    </form>
+  <% } %>
+
+  <br><br>
+  <a href="/materials">Back to Materials</a>
+</body>
+</html>
