@@ -97,4 +97,22 @@ router.put('/:id', isSignedIn, async (req, res) => {
   }
 });
 
+
+router.delete('/:id', isSignedIn, async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id)
+
+    if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
+      return res.redirect(`/materials/${req.params.id}`)
+    }
+
+    await Material.findByIdAndDelete(req.params.id)
+    res.redirect('/materials')
+  } catch (err) {
+    console.error(err)
+    res.redirect('/materials')
+  }
+});
+
+
 module.exports = router
