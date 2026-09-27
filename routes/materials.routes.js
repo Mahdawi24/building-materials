@@ -42,4 +42,16 @@ router.post('/', isSignedIn, async (req, res) => {
   }
 });
 
+//showing single material details
+router.get('/:id', async (req, res) => {
+  try {
+    const material = await Material.findById(req.params.id).populate('category createdBy')
+    res.render('materials/show.ejs', { material })
+  } catch (err) {
+    console.error(err)
+    res.redirect('/materials')
+  }
+});
+
+
 module.exports = router
