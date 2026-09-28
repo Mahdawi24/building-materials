@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Details</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <%- include('../partials/navbar.ejs') %>
+<%- include('../partials/navbar.ejs') %>
 
   <h1><%= material.name %></h1>
-  <p>Category: <%= material.category.name %></p>
+  <p>Category: <%= material.category ? material.category.name : 'N/A' %></p>
   <p>Price: $<%= material.price %></p>
   <p>Unit: <%= material.unit %></p>
-  <p>Created By: <%= material.createdBy.name %></p>
+  <p>Created By: <%= material.createdBy ? (material.createdBy.name || material.createdBy.username) : 'Unknown' %></p>
 
-  <% if (user && material.createdBy && material.createdBy._id.toString() === user._id.toString()) { %>
-    <a href="/materials/<%= material._id %>/edit">Edit Material</a>
+  <% if (user) { %>
+  <a href="/materials/<%= material._id %>/edit">Edit Material</a>
 
-    <form action="/materials/<%= material._id %>?_method=DELETE" method="POST">
-      <button type="submit">Delete Material</button>
-    </form>
-  <% } %>
+  <form action="/materials/<%= material._id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete Material</button>
+  </form>
+<% } %>
 
   <br><br>
   <a href="/materials">Back to Materials</a>

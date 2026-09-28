@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Material = require('../models/materials')
 const Category = require('../models/category')
+const Salesman = require('../models/salesman')
 const isSignedIn = require('../middleware/is-signed-in')
 
 router.get('/', async (req, res) => {
@@ -57,11 +58,6 @@ router.get('/:id', async (req, res) => {
 router.get('/:id/edit', isSignedIn, async (req, res) => {
   try {
     const material = await Material.findById(req.params.id)
-
-    if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
-      return res.redirect(`/materials/${req.params.id}`)
-    }
-
     const categories = await Category.find()
     res.render('materials/edit.ejs', { material, categories })
   } catch (err) {
@@ -73,27 +69,17 @@ router.get('/:id/edit', isSignedIn, async (req, res) => {
 
 router.put('/:id', isSignedIn, async (req, res) => {
   try {
-    const material = await Material.findById(req.params.id)
+    await Material.findByIdAndUpdate(req.params.id, {
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      unit: req.body.unit
+    });
 
-
-    if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
-      return res.redirect(`/materials/${req.params.id}`)
-    }
-
-    await Material.findByIdAndUpdate(
-      req.params.id,
-      {
-        name: req.body.name,
-        category: req.body.category,
-        price: req.body.price,
-        unit: req.body.unit
-      }
-    );
-
-    res.redirect(`/materials/${req.params.id}`)
+    res.redirect('/materials')
   } catch (err) {
     console.error(err)
-    res.redirect(`/materials/${req.params.id}/edit`)
+    console.log('edit is not working')
   }
 });
 

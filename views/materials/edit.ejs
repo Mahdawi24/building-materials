@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Material</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <%- include('../partials/navbar.ejs') %>
@@ -13,14 +14,14 @@
   <form action="/materials/<%= material._id %>?_method=PUT" method="POST">
     <div>
       <label for="name">Material Name:</label>
-      <input type="text" name="name" id="name" required>
+      <input value="<% material.id %>" type="text" name="name" id="name">
     </div>
 
     <div>
       <label for="category">Category:</label>
-      <select name="category" id="category" required>
+      <select name="category" id="category">
         <% for (let i = 0; i < categories.length; i++) { %>
-          <option <%= material.category && material.category.toString() === categories[i]._id.toString() %>>
+          <option value="<%= categories[i]._id %>"<%= material.category && material.category.toString() === categories[i]._id.toString() %>>
             <%= categories[i].name %>
           </option>
         <% } %>
@@ -29,12 +30,12 @@
 
     <div>
       <label for="price">Price:</label>
-      <input type="number" name="price" id="price" min="0" required>
+      <input value="<%= material.price %>" type="number" name="price" id="price" min="0">
     </div>
 
     <div>
       <label for="unit">Unit:</label>
-      <input type="text" name="unit" id="unit" required>
+      <input value="<%= material.unit %>" type="text" name="unit" id="unit">
     </div>
 
     <button type="submit">Update Material</button>

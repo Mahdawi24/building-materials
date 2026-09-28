@@ -12,16 +12,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
-    required: true
+    type: Number
   },  
   assignedSalesman: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Salesman'
+    type: mongoose.Schema.Types.ObjectId
   },
   savedMaterials: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Material'
+    type: mongoose.Schema.Types.ObjectId
   }]
 }, { timestamps: true });
 
