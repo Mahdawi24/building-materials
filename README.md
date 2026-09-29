@@ -31,12 +31,7 @@ This is a web application to manage building materials. Users can create an acco
 8. As a User, I want the navigation bar to dynamically adjust based on whether I am logged in or an admin.
 
 ## Database Design(ERD)
-![ERD](./screenshots/erd.png)
-
-- **User:** username, password, phone, role (`User` or `Admin`)
-- **Category:** name, description
-- **Material:** name, category (linked to Category), price, unit, createdBy (linked to User)
-
+![ERD](image-3.png)
 ## Routes
 
 | Route | Method | Description |
@@ -60,3 +55,8 @@ This is a web application to manage building materials. Users can create an acco
 4. Add a page for admins to manage categories
 5. Add a shopping cart
 6. Add price calculator
+
+## Credits
+* [Express.js Documentation](https://expressjs.com/)
+* [Mongoose Documentation](https://mongoosejs.com/)
+* [W3Schools](https://www.w3schools.com/)
