@@ -14,14 +14,14 @@
   <form action="/materials/<%= material._id %>?_method=PUT" method="POST">
     <div>
       <label for="name">Material Name:</label>
-      <input value="<% material.id %>" type="text" name="name" id="name">
+      <input value="<% material.name %>" type="text" name="name" id="name">
     </div>
 
     <div>
       <label for="category">Category:</label>
       <select name="category" id="category">
         <% for (let i = 0; i < categories.length; i++) { %>
-          <option value="<%= categories[i]._id %>"<%= material.category && material.category.toString() === categories[i]._id.toString() %>>
+          <option value="<%= categories[i]._id %>"<%= material.category && material.category.toString() === categories[i]._id.toString() ? 'selected' : '' %>>
             <%= categories[i].name %>
           </option>
         <% } %>
