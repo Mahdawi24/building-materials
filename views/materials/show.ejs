@@ -15,7 +15,7 @@
   <p>Unit: <%= material.unit %></p>
   <p>Created By: <%= material.createdBy ? (material.createdBy.name || material.createdBy.username) : 'Unknown' %></p>
 
-  <% if (user) { %>
+  <% if (user && user.role === 'Admin') { %>
   <a href="/materials/<%= material._id %>/edit">Edit Material</a>
 
   <form action="/materials/<%= material._id %>?_method=DELETE" method="POST">
