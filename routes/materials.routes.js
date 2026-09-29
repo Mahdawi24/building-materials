@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Material = require('../models/materials')
 const Category = require('../models/category')
-const Salesman = require('../models/salesman')
 const isSignedIn = require('../middleware/is-signed-in')
+const isAdmin = require('../middleware/is-admin')
 
 router.get('/', async (req, res) => {
   try {
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/new', isSignedIn, async (req, res) => {
+router.get('/new', isSignedIn, isAdmin, async (req, res) => {
   try {
     const categories = await Category.find()
     res.render('materials/new.ejs', { categories })
@@ -27,7 +27,7 @@ router.get('/new', isSignedIn, async (req, res) => {
 });
 
 
-router.post('/', isSignedIn, async (req, res) => {
+router.post('/', isSignedIn, isAdmin , async (req, res) => {
   try {
     await Material.create({
       name: req.body.name,
@@ -43,7 +43,7 @@ router.post('/', isSignedIn, async (req, res) => {
   }
 });
 
-//showing single material details
+
 router.get('/:id', async (req, res) => {
   try {
     const material = await Material.findById(req.params.id).populate('category createdBy')
@@ -55,10 +55,13 @@ router.get('/:id', async (req, res) => {
 });
 
 
-router.get('/:id/edit', isSignedIn, async (req, res) => {
+router.get('/:id/edit', isSignedIn, isAdmin , async (req, res) => {
   try {
     const material = await Material.findById(req.params.id)
     const categories = await Category.find()
+    if (!material.createdBy.equals(req.session.user._id)) {
+        return res.redirect('/entries')
+    }
     res.render('materials/edit.ejs', { material, categories })
   } catch (err) {
     console.error(err)
@@ -67,7 +70,7 @@ router.get('/:id/edit', isSignedIn, async (req, res) => {
 });
 
 
-router.put('/:id', isSignedIn, async (req, res) => {
+router.put('/:id', isSignedIn, isAdmin , async (req, res) => {
   try {
     await Material.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
@@ -84,20 +87,14 @@ router.put('/:id', isSignedIn, async (req, res) => {
 });
 
 
-router.delete('/:id', isSignedIn, async (req, res) => {
-  try {
-    const material = await Material.findById(req.params.id)
-
-    if (material.createdBy && material.createdBy.toString() !== req.session.user._id.toString()) {
-      return res.redirect(`/materials/${req.params.id}`)
+router.delete('/:id', isSignedIn, isAdmin, async (req, res) => {
+    try {
+        await Material.findByIdAndDelete(req.params.id)
+        res.redirect('/materials')
+    } catch (err) {
+        console.error(err)
+        res.redirect('/materials')
     }
-
-    await Material.findByIdAndDelete(req.params.id)
-    res.redirect('/materials')
-  } catch (err) {
-    console.error(err)
-    res.redirect('/materials')
-  }
 });
 
 

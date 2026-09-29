@@ -23,9 +23,10 @@ const materialSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Salesman',
+    ref: 'User',
     required: true
-  }
+}
+
 }, { timestamps: true });
     
 module.exports = mongoose.model('Material', materialSchema);

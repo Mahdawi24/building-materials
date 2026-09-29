@@ -14,12 +14,11 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: Number
   },  
-  assignedSalesman: {
-    type: mongoose.Schema.Types.ObjectId
-  },
-  savedMaterials: [{
-    type: mongoose.Schema.Types.ObjectId
-  }]
+  role:{
+    type: String,
+    enum:['User' , "Admin"],
+    default: "User"
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);
