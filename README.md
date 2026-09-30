@@ -52,11 +52,11 @@ This is a web application to manage building materials. Users can create an acco
 1. Add a search bar to find materials by name
 2. Add filter by category
 3. Add images for each material
-4. Add a page for admins to manage categories
-5. Add a shopping cart
-6. Add price calculator
+4. Add a shopping cart and order feature
+5. Add price calculator
 
 ## Credits
 * [Express.js Documentation](https://expressjs.com/)
 * [Mongoose Documentation](https://mongoosejs.com/)
 * [W3Schools](https://www.w3schools.com/)
+* Sayed Hamed — Helped debug and fix the edit feature. 
